@@ -1,0 +1,35 @@
+Location Payload
+
+send LOCATION_PAYLOAD_REMOTE_KEY
+     KEY_i
+     KEY_j   (x coordinate)
+     KEY_k
+     KEY_START
+     KEY_i
+     KEY_j   ( y coordinate)
+     KEY_k
+     KEY_STOP
+
+# may be if we have received maximum possible key then ignore KEY_START or
+ KEY_STOP
+
+
+DATA_PAYLOAD_REMOTE_KEY
+        KEY_i
+        KEY_j   (offset in original message)
+        KEY_k
+        KEY_START
+        KEY_i
+        KEY_j   ( length of payload)
+        KEY_k
+        KEY_START
+        KEY_i   ( 1 st byte)
+        KEY_k
+        KEY_START
+        KEY_i
+        KEY_j   (2 nd byte)
+        KEY_k
+        KEY_START
+        KEY_i  (3 rd byte)
+        KEY_j
+        KEY_STOP
