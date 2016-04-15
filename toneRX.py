@@ -1,27 +1,28 @@
 import numpy as np
 import wave
 import math
-import scipy
-from scipy.io import wavfile
+import scipyWavRead as swr
 
 
 """
 Read Wav File
 """
-# sample rate, data
-rate, y = scipy.io.wavfile.read('testToneTXClean_65_400.wav')
-#Get only one channel of the 4 nao records
-#y_OneChann = y[:,0]
-#print y_OneChann.shape
-
-signal = y
-#signal = y_OneChann
+rate, y = swr.read('toneTest2.wav')
 fs=rate
-print fs
+"""
+#Use when testing on a mono channelsignal = y
+# sample rate, data
+#####
+"""
+
+#Use when testing on the robot
+#Robot records 4 channels so select only one of the channels
+y_OneChann = y[:,0]
+signal = y_OneChann
+#####
+
+
 signalNorm = signal/np.amax(signal)
-print 'max', np.amax(signalNorm)
-print 'min', np.amin(signalNorm)
-print 'mean', np.mean(signalNorm)
 N = len(signal)
 T = 1.0/fs
 

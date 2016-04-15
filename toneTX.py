@@ -2,10 +2,13 @@
 import sys
 import wave
 import math
+import time
 import struct
 import random
 import argparse
+import numpy as np
 from itertools import *
+import symbolPrep as symp
 
 def grouper(n, iterable, fillvalue=None):
     "grouper(3, 'ABCDEFG', 'x') --> ABC DEF Gxx"
@@ -36,14 +39,16 @@ def write_wavefile(w, filename, samples, nframes=None, nchannels=2, sampwidth=2,
 
 
 def main():
-    # get data in binary
-    # for each binary pack 
-    # assaign a tone (lookup table?)
-    # convert to sample 
 
     parser = argparse.ArgumentParser()
     parser.add_argument('filename', help="The file to generate.")
     args = parser.parse_args()
+
+    #data for testing
+    N=100
+    data_in = np.random.random_integers(0,1,N)
+    symbolArray = symp.symbolConverter(data_in)
+
 
     #Transmission Parameters
     toneBandwidth = 20 #Hz
@@ -64,16 +69,24 @@ def main():
 
     w = wave.open(filename, 'w')
     w.setparams((1, 2, rate, rate * toneTime, 'NONE', 'not compressed'))
-
+    t0= time.time()
     tone = ((sine_wave(startTone, 48000, 1),) for i in range(1))
+    t1= time.time()
+    print 'time for tone: ', t1-t0
+    t0= time.time()
     samples = compute_samples(tone, 48000 * toneTime)
+    t1= time.time()
+    print 'time for samples: ', t1-t0
+    t0= time.time()
     write_wavefile(w, filename, samples, 48000 * toneTime, 1, 16 / 8, 48000)
+    t1= time.time()
+    print 'time for write: ', t1-t0 
 
    
-    for countTone in range(symbolNumber):
+    for symbol in symbolArray:
         #after testing.. it will probably be faster to premake the tones and then call them? 
         #what is the size of the message necessay to say that you probably will need all the tones?...
-        tone = ((sine_wave(minTone+(countTone*20), 48000, 1),) for i in range(1))
+        tone = ((sine_wave(minTone+(int(symbol)*20), 48000, 1),) for i in range(1))
         samples = compute_samples(tone, 48000 * toneTime)
         write_wavefile(w, filename, samples, 48000 * toneTime, 1, 16 / 8, 48000)
 

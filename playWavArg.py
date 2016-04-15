@@ -1,8 +1,6 @@
-# -*- encoding: UTF-8 -*-
-
 import sys
 import time
-from naoqi import ALProxy
+from naoqi import ALProxy   
 
 input = sys.argv[1]
 #play wav sound

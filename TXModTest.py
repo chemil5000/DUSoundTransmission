@@ -19,11 +19,6 @@ Data in
 """
 def txMod(data_in):
 
-    """
-    #generate some random data for testing
-    print "Generating data..."
-    data_in = np.random.random_integers(0,1,N)
-    """
     print data_in
     N=len(data_in)
     
